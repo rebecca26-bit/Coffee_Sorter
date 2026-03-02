@@ -1,0 +1,39 @@
+{
+  "best_strategy": "Decision Tree only",
+  "dt_weight": 0.65,
+  "cnn_weight": 0.35,
+  "threshold": 0.5,
+  "performance": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0
+  },
+  "all_strategies": {
+    "Decision Tree only": {
+      "accuracy": 1.0,
+      "f1": 1.0
+    },
+    "CNN only": {
+      "accuracy": 0.5733,
+      "f1": 0.7091
+    },
+    "Fusion: AND Rule": {
+      "accuracy": 0.9867,
+      "f1": 0.9873
+    },
+    "Fusion: OR Rule": {
+      "accuracy": 0.5867,
+      "f1": 0.7207
+    },
+    "Fusion: Weighted": {
+      "accuracy": 1.0,
+      "f1": 1.0
+    }
+  },
+  "models": {
+    "decision_tree": "models/decision_tree_model.pkl",
+    "cnn_tflite": "models/cnn_model.tflite",
+    "scaler": "models/scaler.pkl"
+  }
+}
