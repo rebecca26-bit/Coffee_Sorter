@@ -1,0 +1,27 @@
+from gpiozero import Servo
+import time
+
+servo = Servo(18)  # BCM18
+
+def move_servo_safe(target, steps=8, delay=0.04):
+    current = servo.value if servo.value is not None else 0
+    delta = (target - current) / steps
+    for i in range(steps):
+        servo.value = current + delta * (i + 1)
+        time.sleep(delay)
+
+print("Testing SG90 servo…")
+print("Servo will move gently between left <-> right <-> center.")
+
+while True:
+    print("→ Moving to LEFT")
+    move_servo_safe(-0.6)
+    time.sleep(0.5)
+
+    print("→ Moving to RIGHT")
+    move_servo_safe(0.6)
+    time.sleep(0.5)
+
+    print("→ Moving to CENTER")
+    move_servo_safe(0)
+    time.sleep(1)
