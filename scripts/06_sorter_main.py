@@ -63,10 +63,10 @@ CONFIG = {
     "S2"         : 8,       # TCS3200 colour filter select
     "S3"         : 7,       # TCS3200 colour filter select
     "OUT"        : 24,      # TCS3200 digital output
-    "HX_DT"      : 5,       # HX711 data pin
-    "HX_SCK"     : 6,       # HX711 clock pin
+    "HX_DT"      : None,       # HX711 data pin
+    "HX_SCK"     : None,       # HX711 clock pin
     "SERVO_PIN"  : 12,      # Servo motor PWM pin
-    "LED_PIN"    : 18,      # LED ring control pin
+    "LED_PIN"    : None,      # LED ring control pin
     "DC_MOTOR_IN1": 20,     # Conveyor belt motor IN1
     "DC_MOTOR_IN2": 21,     # Conveyor belt motor IN2
     "DC_MOTOR_EN" : 16,     # Conveyor belt motor enable (PWM)
@@ -156,10 +156,10 @@ def init_hardware():
     log.info("  ✓ TCS3200 colour sensor initialised")
 
     # HX711 load cell
-    hx = HX711(dout_pin=CONFIG["HX_DT"], pd_sck_pin=CONFIG["HX_SCK"])
-    hx.set_scale_ratio(CONFIG["HX711_SCALE_RATIO"])
-    hx.tare()
-    log.info("  ✓ HX711 load cell initialised and tared")
+    # hx = HX711(dout_pin=CONFIG["HX_DT"], pd_sck_pin=CONFIG["HX_SCK"])
+    # hx.set_scale_ratio(CONFIG["HX711_SCALE_RATIO"])
+    # hx.tare()
+    # log.info("  ✓ HX711 load cell initialised and tared")
 
     # Servo motor
     GPIO.setup(CONFIG["SERVO_PIN"], GPIO.OUT)
