@@ -1,0 +1,4 @@
+timestamp,bean_id,weight_g,red,green,blue,r_minus_g,dt_prob,cnn_prob,fusion_score,decision
+2026-03-09 12:36:35,bean_0001,0.3,257,228,277,29,0.0,0.0,0.0,BAD
+2026-03-13 16:07:54,bean_0001,0.3,747,665,826,82,1.0,1.0,1.0,BAD
+2026-03-13 16:08:48,bean_0002,0.3,814,717,890,97,1.0,1.0,1.0,BAD

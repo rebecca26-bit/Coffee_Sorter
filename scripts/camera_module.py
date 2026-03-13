@@ -1,16 +1,3 @@
-"""
-Camera Module for Coffee Sorter
-================================
-Improved version with:
-- Error handling for camera initialization
-- Context manager support (__enter__/__exit__)
-- Proper docstrings
-- Logging support
-
-Author: Group Trailblazers
-Version: 2.0.0
-"""
-
 import time
 import logging
 from picamera2 import Picamera2
