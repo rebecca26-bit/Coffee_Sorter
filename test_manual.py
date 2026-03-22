@@ -1,3 +1,35 @@
+"""
+================================================================
+COFFEE BEAN SORTER — MANUAL STEP TEST
+Uganda Christian University | Group Trailblazers
+S23B23/056 | S23B23/010 | S23B23/046
+
+Tests the full sorting pipeline manually step by step.
+You physically move the bean between sensors and press
+Enter at each stage to advance.
+
+USE THIS FOR:
+  - Testing each sensor individually
+  - Verifying ML decisions are correct
+  - Demonstrating the system to others
+  - Calibrating conveyor delays
+
+STAGES PER BEAN:
+  Stage 1 - Place bean at IR sensor
+  Stage 2 - Move bean to colour sensor
+  Stage 3 - Move bean under camera
+  Stage 4 - Move bean to servo gate
+  Result  - Servo sorts automatically
+
+HOW TO RUN:
+  cd ~/Projects/Coffee_Sorter
+  python3 scripts/test_manual_steps.py
+
+STOP:
+  Press Ctrl+C or type 'q' when prompted
+================================================================
+"""
+
 import os
 import sys
 import csv
@@ -10,7 +42,7 @@ sys.path.insert(0, 'scripts')
 warnings.filterwarnings('ignore')
 
 import RPi.GPIO as GPIO
-from camera_module2 import CameraModule
+from camera_module import CameraModule
 import joblib
 import tensorflow as tf
 import json
@@ -152,9 +184,9 @@ set_servo_angle(CONFIG["SERVO_PASS_ANGLE"])
 print("  Servo motor           : ready (gate open)")
 
 try:
-    cam = CameraModule()
+    cam = CameraModule(resolution=(640, 480))
     print("  Camera Module 2       : ready")
-    print("  ROI config loaded")
+    print("  " + cam.get_roi_info())
 except Exception as e:
     print("  Camera                : FAILED - " + str(e))
     cam = None
@@ -214,10 +246,7 @@ def predict_bean(r, g, b, image_array):
 
     if interpreter is not None:
         try:
-            import cv2
-            img_resized = cv2.resize(image_array, (224, 224))
-            img_normalized = img_resized.astype(np.float32) / 255.0
-            img_input = np.expand_dims(img_normalized, axis=0)
+            img_input = np.expand_dims(image_array, axis=0).astype(np.float32)
             interpreter.set_tensor(input_details[0]["index"], img_input)
             interpreter.invoke()
             cnn_prob = float(interpreter.get_tensor(output_details[0]["index"])[0][0])
@@ -295,8 +324,7 @@ try:
         if cam is not None:
             try:
                 img_path          = CONFIG["IMAGES_DIR"] + bean_label + ".jpg"
-                ml_array = cam.capture_image(save_path=img_path)
-                cropped = ml_array
+                ml_array, cropped = cam.capture_bean(img_path)
                 print("done")
                 print("  Saved       : " + img_path)
                 print("  ML shape    : " + str(ml_array.shape))
